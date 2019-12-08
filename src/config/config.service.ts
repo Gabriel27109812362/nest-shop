@@ -1,5 +1,6 @@
 import {TypeOrmModuleOptions} from '@nestjs/typeorm';
 import {config} from 'dotenv';
+import * as fs from 'fs';
 
 class ConfigService {
 
@@ -29,7 +30,8 @@ class ConfigService {
     }
 
     public getTypeOrmConfig(): TypeOrmModuleOptions {
-        return {
+
+        const typeOrmConfig: TypeOrmModuleOptions = {
             type: 'postgres',
             host: this.getValue('DB_HOST'),
             port: Number(this.getValue('DB_PORT')),
@@ -37,16 +39,19 @@ class ConfigService {
             password: this.getValue('DB_PASSWORD'),
             database: this.getValue('DB_NAME'),
             migrationsTableName: 'migration',
-            migrations: ['src/migration/*.ts'],
+            migrations: ['dist/migration/*.js'],
             cli: {
                 migrationsDir: 'src/migration',
                 entitiesDir: 'src/models',
             },
-            entities: ['models/*.js'],
+            entities: ['dist/models/*.js'],
             synchronize: true,
             ssl: this.isProd(),
-
         };
+
+        fs.writeFileSync('ormconfig.json', JSON.stringify(typeOrmConfig, null, 2));
+
+        return typeOrmConfig;
     }
 }
 
