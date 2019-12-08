@@ -5,7 +5,7 @@ import {Order} from './order';
 import {Commodity} from './commodity';
 import {CommodityAmount} from './commodityAmount';
 
-@Entity()
+@Entity('invoice')
 export class Invoice {
     @PrimaryGeneratedColumn('increment')
     idInvoice: number;
@@ -27,7 +27,7 @@ export class Invoice {
     client: Client;
 
     @ManyToOne(type => Order, order => order.invoices)
-    @JoinColumn()
+    @JoinColumn({name: 'idOrder'})
     order: Order;
 
     // Join Invoice table with CommodityAmount

@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, OneToOne, PrimaryColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, JoinTable, OneToOne, PrimaryColumn} from 'typeorm';
 import {Client} from './client';
 
 @Entity()
@@ -22,6 +22,12 @@ export class ClientPersonalData {
     email: string;
 
     @OneToOne(type => Client, client => client.clientPersonalData)
-    @JoinColumn()
+    @JoinTable({
+        name: 'client',
+        joinColumn: {
+            name: 'idClient',
+            referencedColumnName: 'idClient',
+        },
+    })
     client: Client;
 }

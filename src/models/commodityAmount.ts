@@ -1,4 +1,4 @@
-import {Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryColumn} from 'typeorm';
+import {Column, Entity, JoinColumn, ManyToOne} from 'typeorm';
 import {Commodity} from './commodity';
 import {Invoice} from './invoice';
 

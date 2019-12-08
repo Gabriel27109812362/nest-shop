@@ -1,4 +1,4 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
+import {Column, Entity, JoinTable, ManyToOne, OneToMany, PrimaryGeneratedColumn} from 'typeorm';
 import {Invoice} from './invoice';
 import {Client} from './client';
 
@@ -15,9 +15,16 @@ export class Order {
     totalCost: number;
 
     @OneToMany(type => Invoice, invoice => invoice.order)
+    @JoinTable({
+        name: 'invoice',
+        joinColumn: {
+            name: 'idOrder',
+            referencedColumnName: 'idOrder',
+        },
+    })
     invoices: Invoice[];
+
     @ManyToOne(type => Client, client => client.orders)
     client: Client;
-
 
 }

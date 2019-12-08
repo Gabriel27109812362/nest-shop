@@ -1,12 +1,15 @@
-import {PrimaryGeneratedColumn, Column, Entity, OneToOne, OneToMany} from 'typeorm';
+import {PrimaryGeneratedColumn, Column, Entity, OneToOne, OneToMany, JoinColumn} from 'typeorm';
 import {ClientPersonalData} from './clientPersonalData';
 import {Transaction} from './transaction';
 import {Invoice} from './invoice';
 import {Order} from './order';
 
-@Entity()
+@Entity('client')
 export class Client {
-    @PrimaryGeneratedColumn('increment') idClient: number;
+
+    @JoinColumn({name: 'idClient'})
+    @OneToOne(type => ClientPersonalData, clientPersonalData => clientPersonalData.client, {primary: true})
+    clientPersonalData: ClientPersonalData;
 
     @Column({type: 'varchar', nullable: false})
     nick: string;
@@ -16,9 +19,6 @@ export class Client {
 
     @Column({type: 'date', nullable: false})
     registerDate: Date;
-
-    @OneToOne(type => ClientPersonalData, clientPersonalData => clientPersonalData.client)
-    clientPersonalData: ClientPersonalData;
 
     @OneToMany(type => Transaction, transaction => transaction.client)
     transactions: Transaction[];
