@@ -47,6 +47,13 @@ export class User {
   employee: Employee;
 
   @OneToMany(type => Order, order => order.user)
+  @JoinTable({
+    name: 'idUser',
+    joinColumn: {
+      name: 'idUser',
+      referencedColumnName: 'idUser',
+    },
+  })
   orders: Order[];
 
 }

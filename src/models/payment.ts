@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from './order';
 
 @Entity('payment')
@@ -26,6 +26,7 @@ export class Payment {
   description: string;
 
   @ManyToOne(type => Order, order => order.payments)
+  @JoinColumn({ name: 'idOrder' })
   order: Order;
 
 }
