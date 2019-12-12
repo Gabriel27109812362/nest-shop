@@ -1,11 +1,12 @@
 import { Column, Entity, JoinColumn, JoinTable, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
-import { ClientAddress } from './clientAddress';
 import { User } from './user';
+import { EmployeeAddress } from './employeeAddress';
 
-@Entity('client')
-export class Client {
+@Entity('employee')
+export class Employee {
+
   @PrimaryGeneratedColumn('increment')
-  idClient: number;
+  idEmployee: number;
 
   @Column({ type: 'varchar' })
   name: string;
@@ -21,18 +22,26 @@ export class Client {
 
   @Column({ type: 'varchar' })
   pesel: string;
+
+  @Column({ type: 'varchar' })
+  position: string;
+
+  @Column({ type: 'numeric' })
+  salary: number;
+
   // PK
-  @OneToOne(type => ClientAddress, clientAddress => clientAddress.client)
+  @OneToOne(type => EmployeeAddress, employeeAddress => employeeAddress.employee)
   @JoinTable({
-    name: 'client_address',
+    name: 'employee_address',
     joinColumn: {
-      name: 'idClient',
-      referencedColumnName: 'idClient',
+      name: 'idEmployee',
+      referencedColumnName: 'idEmployee',
     },
   })
-  clientAddress: ClientAddress;
+  employeeAddress: EmployeeAddress;
+
   // FK
-  @OneToOne(type => User, user => user.client)
+  @OneToOne(type => User, user => user.employee)
   @JoinColumn({ name: 'idUser' })
   user: User;
 
