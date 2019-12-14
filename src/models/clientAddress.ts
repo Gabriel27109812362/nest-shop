@@ -25,7 +25,7 @@ export class ClientAddress {
   @Column({ type: 'integer', nullable: true })
   flatNumber: string;
 
-  @OneToOne(type => Client, client => client.clientAddress)
+  @OneToOne(type => Client, client => client.clientAddress, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'idClient' })
   client: Client;
 }

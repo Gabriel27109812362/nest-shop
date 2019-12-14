@@ -32,7 +32,7 @@ export class Client {
   })
   clientAddress: ClientAddress;
 
-  @OneToOne(type => User, user => user.client)
+  @OneToOne(type => User, user => user.client, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'idUser' })
   user: User;
 

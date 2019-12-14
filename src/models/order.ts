@@ -19,7 +19,7 @@ export class Order {
   @Column({ type: 'varchar' })
   orderStatus: string;
 
-  @ManyToOne(type => User, user => user.orders)
+  @ManyToOne(type => User, user => user.orders, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'idUser' })
   user: User;
 
