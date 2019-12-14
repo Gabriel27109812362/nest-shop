@@ -25,7 +25,6 @@ export class User {
   @Column({ type: 'varchar' })
   role: string;
 
-  // PK
   @OneToOne(type => Client, client => client.user)
   @JoinTable({
     name: 'client',
