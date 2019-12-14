@@ -25,7 +25,6 @@ export class EmployeeAddress {
   @Column({ type: 'integer', nullable: true })
   flatNumber: string;
 
-  // FK
   @OneToOne(type => Employee, employee => employee.employeeAddress)
   @JoinColumn({ name: 'idEmployee' })
   employee: Employee;

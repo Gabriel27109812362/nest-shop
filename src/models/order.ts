@@ -2,7 +2,6 @@ import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany
 import { User } from './user';
 import { Payment } from './payment';
 import { OrderDetails } from './orderDetails';
-import { type } from 'os';
 import { Product } from './product';
 
 @Entity('order')
@@ -33,7 +32,7 @@ export class Order {
     },
   })
   payments: Payment[];
-
+// relationship orders -> product via orderDetails junction table (bi-directional)
   @OneToMany(type => OrderDetails, orderDetails => orderDetails.order)
   orderDetails: OrderDetails[];
 
@@ -50,4 +49,5 @@ export class Order {
     },
   })
   products: Product[];
+//
 }

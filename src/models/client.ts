@@ -21,7 +21,7 @@ export class Client {
 
   @Column({ type: 'varchar' })
   pesel: string;
-  // PK
+
   @OneToOne(type => ClientAddress, clientAddress => clientAddress.client)
   @JoinTable({
     name: 'client_address',
@@ -31,7 +31,7 @@ export class Client {
     },
   })
   clientAddress: ClientAddress;
-  // FK
+
   @OneToOne(type => User, user => user.client)
   @JoinColumn({ name: 'idUser' })
   user: User;

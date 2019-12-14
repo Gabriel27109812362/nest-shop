@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Client } from './client';
 
 @Entity('client_address')
@@ -25,7 +25,6 @@ export class ClientAddress {
   @Column({ type: 'integer', nullable: true })
   flatNumber: string;
 
-  // FK
   @OneToOne(type => Client, client => client.clientAddress)
   @JoinColumn({ name: 'idClient' })
   client: Client;

@@ -28,5 +28,4 @@ export class Payment {
   @ManyToOne(type => Order, order => order.payments)
   @JoinColumn({ name: 'idOrder' })
   order: Order;
-
 }

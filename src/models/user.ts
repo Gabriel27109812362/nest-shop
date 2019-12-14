@@ -1,4 +1,4 @@
-import { PrimaryGeneratedColumn, Column, Entity, OneToOne, OneToMany, JoinColumn, Check, JoinTable } from 'typeorm';
+import { PrimaryGeneratedColumn, Column, Entity, OneToOne, OneToMany, Check, JoinTable } from 'typeorm';
 import { Client } from './client';
 import { Employee } from './employee';
 import { Order } from './order';
