@@ -1,6 +1,7 @@
-import { Column, Entity, ManyToMany, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderDetails } from './orderDetails';
 import { Order } from './order';
+import { Vat } from './vat';
 
 @Entity('product')
 export class Product {
@@ -25,5 +26,9 @@ export class Product {
 
   @ManyToMany(type => Order, order => order.products)
   orders: Order;
+
+  @ManyToOne(type => Vat, vat => vat.products)
+  @JoinColumn({ name: 'idVat' })
+  vat: Vat;
 
 }
