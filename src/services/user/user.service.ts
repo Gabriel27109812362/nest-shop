@@ -37,6 +37,7 @@ export class UserService {
           login: createUserDTO.login,
           password: createUserDTO.password,
           registerDate: new Date(Date.now()).toDateString(),
+          email: createUserDTO.email,
           role: createUserDTO.role,
         },
       ]);
