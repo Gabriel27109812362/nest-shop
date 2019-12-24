@@ -9,16 +9,14 @@ export class UserService {
   private connection = getConnection();
 
   getUsersQueryExec() {
-    const query = this.connection
+    return this.connection
       .createQueryBuilder()
       .select('user')
       .from(User, 'user').where('').getMany();
-
-    return query;
   }
 
   createUserQuery(createUserDTO: CreateUserDTO) {
-    const query = this.connection
+    return this.connection
       .createQueryBuilder()
       .insert()
       .into(User)
@@ -30,7 +28,18 @@ export class UserService {
           role: createUserDTO.role,
         },
       ]);
+  }
+
+  deleteUserQuery(id: number | string) {
+
+    const query = this.connection
+      .createQueryBuilder()
+      .delete()
+      .from(User)
+      .where('idUser = :idUser', { idUser: Number(id) });
 
     return query;
+
   }
+
 }
