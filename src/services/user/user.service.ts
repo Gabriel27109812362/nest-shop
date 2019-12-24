@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { CreateUserDTO } from '../../DTO/createUserDTO';
+import { CreateUserDTO } from '../../DTO/user/createUserDTO';
 import { getConnection } from 'typeorm';
 import { User } from '../../models/user';
+import { EditUserDTO } from '../../DTO/user/editUserDTO';
 
 @Injectable()
 export class UserService {
@@ -12,7 +13,18 @@ export class UserService {
     return this.connection
       .createQueryBuilder()
       .select('user')
-      .from(User, 'user').where('').getMany();
+      .from(User, 'user')
+      .where('')
+      .getMany();
+  }
+
+  getUserByIdQueryExec(id: number | string) {
+    return this.connection
+      .createQueryBuilder()
+      .select('user')
+      .from(User, 'user')
+      .where('user.idUser = :idUser', { idUser: Number(id) })
+      .getOne();
   }
 
   createUserQuery(createUserDTO: CreateUserDTO) {
@@ -31,15 +43,18 @@ export class UserService {
   }
 
   deleteUserQuery(id: number | string) {
-
-    const query = this.connection
+    return this.connection
       .createQueryBuilder()
       .delete()
       .from(User)
       .where('idUser = :idUser', { idUser: Number(id) });
-
-    return query;
-
   }
 
+  editUserQuery(id: number | string, changesObj: EditUserDTO) {
+    return this.connection
+      .createQueryBuilder()
+      .update(User)
+      .set({ ...changesObj })
+      .where('idUser = :idUser', { idUser: Number(id) });
+  }
 }
