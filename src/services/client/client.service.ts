@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { getConnection } from 'typeorm';
 import { Client } from '../../models/client';
+import { CreateClientDTO } from '../../DTO/client/createClientDTO';
 
 @Injectable()
 export class ClientService {

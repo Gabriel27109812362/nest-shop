@@ -1,4 +1,4 @@
-class CreateClientDTO {
+export class CreateClientDTO {
   readonly name: string;
   readonly surname: string;
   readonly phoneNumber: string;

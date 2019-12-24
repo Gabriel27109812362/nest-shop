@@ -1,4 +1,4 @@
-class EditClientDTO {
+export class EditClientDTO {
   readonly name?: string;
   readonly surname?: string;
   readonly phoneNumber?: string;
