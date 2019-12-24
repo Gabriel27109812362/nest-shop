@@ -11,19 +11,19 @@ export class User {
   idUser: number;
 
   @Column({ type: 'varchar' })
-  name: string;
-
-  @Column({ type: 'varchar' })
-  nick: string;
+  login: string;
 
   @Column({ type: 'varchar' })
   password: string;
+
+  @Column({ type: 'varchar', nullable: true })
+  email: string;
 
   @Column({ type: 'date' })
   registerDate: Date;
 
   @Column({ type: 'varchar' })
-  role: string;
+  role: 'employee' | 'client';
 
   @OneToOne(type => Client, client => client.user)
   @JoinTable({

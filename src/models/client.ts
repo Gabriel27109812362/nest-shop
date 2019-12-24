@@ -17,9 +17,6 @@ export class Client {
   phoneNumber: string;
 
   @Column({ type: 'varchar' })
-  email: string;
-
-  @Column({ type: 'varchar' })
   pesel: string;
 
   @OneToOne(type => ClientAddress, clientAddress => clientAddress.client)
