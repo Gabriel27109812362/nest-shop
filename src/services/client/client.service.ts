@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { getConnection } from 'typeorm';
 import { Client } from '../../models/client';
 import { CreateClientDTO } from '../../DTO/client/createClientDTO';
+import { EditClientDTO } from '../../DTO/client/editClientDTO';
 
 @Injectable()
 export class ClientService {
@@ -9,10 +10,21 @@ export class ClientService {
   private connection = getConnection();
 
   getClientsQueryExec() {
-
+    return this.connection
+      .createQueryBuilder()
+      .select('client')
+      .from(Client, 'client')
+      .where('')
+      .getMany();
   }
 
-  getClientByIdQueryExec() {
+  getClientByIdQueryExec(id: number | string) {
+    return this.connection
+      .createQueryBuilder()
+      .select('client')
+      .from(Client, 'client')
+      .where('client.idClient = :idClient', { idClient: Number(id) })
+      .getOne();
 
   }
 
@@ -30,11 +42,21 @@ export class ClientService {
 
   }
 
-  deleteClientQuery() {
+  deleteClientQuery(id: number | string) {
+    return this.connection
+      .createQueryBuilder()
+      .delete()
+      .from(Client)
+      .where('idClient = :idClient', { idClient: Number(id) });
 
   }
 
-  editClientQuery() {
+  editClientQuery(id: number | string, changes: EditClientDTO) {
+    return this.connection
+      .createQueryBuilder()
+      .update(Client)
+      .set({ ...changes })
+      .where('idClient = :idClient', { idClient: Number(id) });
 
   }
 

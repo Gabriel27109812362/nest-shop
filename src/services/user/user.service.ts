@@ -51,11 +51,11 @@ export class UserService {
       .where('idUser = :idUser', { idUser: Number(id) });
   }
 
-  editUserQuery(id: number | string, changesObj: EditUserDTO) {
+  editUserQuery(id: number | string, changes: EditUserDTO) {
     return this.connection
       .createQueryBuilder()
       .update(User)
-      .set({ ...changesObj })
+      .set({ ...changes })
       .where('idUser = :idUser', { idUser: Number(id) });
   }
 }
