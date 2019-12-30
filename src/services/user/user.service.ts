@@ -1,61 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { CreateUserDTO } from '../../DTO/user/createUserDTO';
-import { getConnection } from 'typeorm';
+import { getManager } from 'typeorm';
 import { User } from '../../models/user';
 import { EditUserDTO } from '../../DTO/user/editUserDTO';
 
 @Injectable()
 export class UserService {
 
-  private connection = getConnection();
+  private manager = getManager();
 
   getUsersQueryExec() {
-    return this.connection
-      .createQueryBuilder()
-      .select('user')
-      .from(User, 'user')
-      .where('')
-      .getMany();
+    return this.manager
+      .find(User, {});
   }
 
   getUserByIdQueryExec(id: number | string) {
-    return this.connection
-      .createQueryBuilder()
-      .select('user')
-      .from(User, 'user')
-      .where('user.idUser = :idUser', { idUser: Number(id) })
-      .getOne();
+    return this.manager
+      .findOne(User, { idUser: Number(id) });
   }
 
-  createUserQuery(createUserDTO: CreateUserDTO) {
-    return this.connection
-      .createQueryBuilder()
-      .insert()
-      .into(User)
-      .values([
-        {
-          login: createUserDTO.login,
-          password: createUserDTO.password,
-          registerDate: new Date(Date.now()).toDateString(),
-          email: createUserDTO.email,
-          role: createUserDTO.role,
-        },
-      ]);
+  createUserQueryExec(createUserDTO: CreateUserDTO) {
+    return this.manager
+      .insert(User, {
+        ...createUserDTO,
+        registerDate: new Date(Date.now()).toDateString(),
+      });
   }
 
-  deleteUserQuery(id: number | string) {
-    return this.connection
-      .createQueryBuilder()
-      .delete()
-      .from(User)
-      .where('idUser = :idUser', { idUser: Number(id) });
+  deleteUserQueryExec(id: number | string) {
+    return this.manager
+      .delete(User, { idUser: Number(id) });
   }
 
-  editUserQuery(id: number | string, changes: EditUserDTO) {
-    return this.connection
-      .createQueryBuilder()
-      .update(User)
-      .set({ ...changes })
-      .where('idUser = :idUser', { idUser: Number(id) });
+  editUserQueryExec(id: number | string, changes: EditUserDTO) {
+    return this.manager
+      .update(User, { idUser: Number(id) }, { ...changes });
   }
 }

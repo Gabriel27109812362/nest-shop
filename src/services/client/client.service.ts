@@ -1,63 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { getConnection } from 'typeorm';
+import { getManager } from 'typeorm';
 import { Client } from '../../models/client';
 import { CreateClientDTO } from '../../DTO/client/createClientDTO';
 import { EditClientDTO } from '../../DTO/client/editClientDTO';
+import { ConnectClientWithUserDTO } from '../../DTO/client/connectClientWithUserDTO';
+import { User } from '../../models/user';
 
 @Injectable()
 export class ClientService {
 
-  private connection = getConnection();
+  private manager = getManager();
 
   getClientsQueryExec() {
-    return this.connection
-      .createQueryBuilder()
-      .select('client')
-      .from(Client, 'client')
-      .where('')
-      .getMany();
+    return this.manager
+      .find(Client, {});
   }
 
   getClientByIdQueryExec(id: number | string) {
-    return this.connection
-      .createQueryBuilder()
-      .select('client')
-      .from(Client, 'client')
-      .where('client.idClient = :idClient', { idClient: Number(id) })
-      .getOne();
-
+    return this.manager
+      .findOne(Client, { idClient: Number(id) });
   }
 
-  createClientQuery(createClientDTO: CreateClientDTO) {
-    return this.connection
-      .createQueryBuilder()
-      .insert()
-      .into(Client)
-      .values({
-        name: createClientDTO.name,
-        surname: createClientDTO.surname,
-        phoneNumber: createClientDTO.phoneNumber,
-        pesel: createClientDTO.pesel,
+  createClientQueryExec(createClientDTO: CreateClientDTO) {
+    return this.manager
+      .insert(Client, {
+        ...createClientDTO,
       });
-
   }
 
-  deleteClientQuery(id: number | string) {
-    return this.connection
-      .createQueryBuilder()
-      .delete()
-      .from(Client)
-      .where('idClient = :idClient', { idClient: Number(id) });
-
+  deleteClientQueryExec(id: number | string) {
+    return this.manager
+      .delete(Client, { idClient: Number(id) });
   }
 
-  editClientQuery(id: number | string, changes: EditClientDTO) {
-    return this.connection
-      .createQueryBuilder()
-      .update(Client)
-      .set({ ...changes })
-      .where('idClient = :idClient', { idClient: Number(id) });
+  editClientQueryExec(id: number | string, changes: EditClientDTO) {
+    return this.manager
+      .update(Client, { idClient: Number(id) }, { ...changes });
+  }
 
+  async connectUserQueryExec(connectUserDTO: ConnectClientWithUserDTO) {
+    const user = await this.manager
+      .findOne(User, connectUserDTO.idUser);
+
+    const client = await this.manager
+      .findOne(Client, connectUserDTO.idClient);
+
+    client.user = user;
+    await this.manager.save(client);
   }
 
 }
