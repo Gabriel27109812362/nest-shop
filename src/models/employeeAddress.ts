@@ -23,7 +23,7 @@ export class EmployeeAddress {
   houseNumber: string;
 
   @Column({ type: 'integer', nullable: true })
-  flatNumber: string;
+  flatNumber: number;
 
   @OneToOne(type => Employee, employee => employee.employeeAddress)
   @JoinColumn({ name: 'idEmployee' })

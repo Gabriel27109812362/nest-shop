@@ -1,40 +1,52 @@
 import { Injectable } from '@nestjs/common';
-import { getConnection } from 'typeorm';
+import { getManager } from 'typeorm';
 import { Client } from '../../models/client';
+import { CreateClientDTO } from '../../DTO/client/createClientDTO';
+import { EditClientDTO } from '../../DTO/client/editClientDTO';
+import { ConnectClientWithUserDTO } from '../../DTO/client/connectClientWithUserDTO';
+import { User } from '../../models/user';
 
 @Injectable()
 export class ClientService {
 
-  private connection = getConnection();
+  private manager = getManager();
 
   getClientsQueryExec() {
-
+    return this.manager
+      .find(Client, {});
   }
 
-  getClientByIdQueryExec() {
-
+  getClientByIdQueryExec(id: number | string) {
+    return this.manager
+      .findOne(Client, { idClient: Number(id) });
   }
 
-  createClientQuery(createClientDTO: CreateClientDTO) {
-    return this.connection
-      .createQueryBuilder()
-      .insert()
-      .into(Client)
-      .values({
-        name: createClientDTO.name,
-        surname: createClientDTO.surname,
-        phoneNumber: createClientDTO.phoneNumber,
-        pesel: createClientDTO.pesel,
+  createClientQueryExec(createClientDTO: CreateClientDTO) {
+    return this.manager
+      .insert(Client, {
+        ...createClientDTO,
       });
-
   }
 
-  deleteClientQuery() {
-
+  deleteClientQueryExec(id: number | string) {
+    return this.manager
+      .delete(Client, { idClient: Number(id) });
   }
 
-  editClientQuery() {
+  editClientQueryExec(id: number | string, changes: EditClientDTO) {
+    return this.manager
+      .update(Client, { idClient: Number(id) }, { ...changes });
+  }
 
+  async connectUserQueryExec(connectUserDTO: ConnectClientWithUserDTO) {
+    const user = await this.manager
+      .findOne(User, connectUserDTO.idUser);
+
+    const client = await this.manager
+      .findOne(Client, connectUserDTO.idClient);
+
+    client.user = user;
+    await this.manager.save(client);
   }
 
 }

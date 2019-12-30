@@ -18,9 +18,6 @@ export class Employee {
   phoneNumber: string;
 
   @Column({ type: 'varchar' })
-  email: string;
-
-  @Column({ type: 'varchar' })
   pesel: string;
 
   @Column({ type: 'varchar' })
