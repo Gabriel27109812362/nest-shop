@@ -3,7 +3,9 @@ import { CreateUserDTO } from '../../DTO/user/createUserDTO';
 import { Response } from 'express';
 import { UserService } from '../../services/user/user.service';
 import { EditUserDTO } from '../../DTO/user/editUserDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('user')
 @Controller('user')
 export class UserController {
 
@@ -16,6 +18,7 @@ export class UserController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getUserById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -29,6 +32,7 @@ export class UserController {
     res.send('user has been created');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteUser(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -36,6 +40,7 @@ export class UserController {
     res.send(`User ${id} has been deleted`);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editUser(@Param() params, @Body() editUserDTO: EditUserDTO, @Res() res: Response) {
     const { id } = params;

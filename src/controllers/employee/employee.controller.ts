@@ -4,7 +4,9 @@ import { Response } from 'express';
 import { CreateEmployeeDTO } from '../../DTO/employee/createEmployeeDTO';
 import { EditEmployeeDTO } from '../../DTO/employee/editEmployeeDTO';
 import { ConnectEmployeeWithUserDTO } from '../../DTO/employee/connectEmployeeWithUserDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('employee')
 @Controller('employee')
 export class EmployeeController {
   constructor(private employeeService: EmployeeService) {
@@ -16,6 +18,7 @@ export class EmployeeController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getClientById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -29,6 +32,7 @@ export class EmployeeController {
     res.send('Employee has been created');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteEmployee(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -43,6 +47,7 @@ export class EmployeeController {
 
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editEmployee(@Param() params, @Body() editEmployeeDTO: EditEmployeeDTO, @Res() res: Response) {
     const { id } = params;

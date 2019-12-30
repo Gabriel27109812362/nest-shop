@@ -1,5 +1,9 @@
-export class ConnectAddressWithClientDTO {
-  readonly idClient: number;
-  readonly idAddress: number;
+import { ApiProperty } from '@nestjs/swagger';
 
+export class ConnectAddressWithClientDTO {
+  @ApiProperty()
+  readonly idClient: number;
+
+  @ApiProperty()
+  readonly idAddress: number;
 }

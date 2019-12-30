@@ -4,7 +4,9 @@ import { CreateAddressDTO } from '../../DTO/address/createAddressDTO';
 import { ClientAddressService } from '../../services/client-address/client-address.service';
 import { EditAddressDTO } from '../../DTO/address/editAddressDTO';
 import { ConnectAddressWithClientDTO } from '../../DTO/address/connectAddressWithClientDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('client-address')
 @Controller('clientAddress')
 export class ClientAddressController {
 
@@ -17,6 +19,7 @@ export class ClientAddressController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getClientAddressById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -30,6 +33,7 @@ export class ClientAddressController {
     res.send('Address for client has been added');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteAddressById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -43,6 +47,7 @@ export class ClientAddressController {
     res.send(`Address id: ${connectClientDTO.idAddress} has been connected with ${connectClientDTO.idClient} client`);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editClientAddress(@Param() params, @Body() editAddressDTO: EditAddressDTO, @Res() res: Response) {
     const { id } = params;

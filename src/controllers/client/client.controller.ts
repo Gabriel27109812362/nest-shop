@@ -4,7 +4,9 @@ import { Response } from 'express';
 import { CreateClientDTO } from '../../DTO/client/createClientDTO';
 import { EditClientDTO } from '../../DTO/client/editClientDTO';
 import { ConnectClientWithUserDTO } from '../../DTO/client/connectClientWithUserDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('client')
 @Controller('client')
 export class ClientController {
 
@@ -18,6 +20,7 @@ export class ClientController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getClientById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -31,6 +34,7 @@ export class ClientController {
     res.send('Client has been created');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteUser(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -44,6 +48,7 @@ export class ClientController {
     res.send(`Client id:${connectUserDTO.idClient} connect with ${connectUserDTO.idUser} idUser`);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editUser(@Param() params, @Body() editClientDTO: EditClientDTO, @Res() res: Response) {
     const { id } = params;

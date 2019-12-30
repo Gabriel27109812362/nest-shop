@@ -4,7 +4,9 @@ import { Response } from 'express';
 import { CreateAddressDTO } from '../../DTO/address/createAddressDTO';
 import { EditAddressDTO } from '../../DTO/address/editAddressDTO';
 import { ConnectAddressWithEmployeeDTO } from '../../DTO/address/connectAddressWithEmployeeDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('employee-address')
 @Controller('employeeAddress')
 export class EmployeeAddressController {
 
@@ -17,6 +19,7 @@ export class EmployeeAddressController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getEmployeeAddressById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -30,6 +33,7 @@ export class EmployeeAddressController {
     res.send('Address for employee has been added');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteAddressById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -43,6 +47,7 @@ export class EmployeeAddressController {
     res.send(`Address ${connectEmployeeDTO.idAddress} has been connected with ${connectEmployeeDTO.idEmployee} employee`);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editEmployeeAddress(@Param() params, @Body() editAddressDTO: EditAddressDTO, @Res() res: Response) {
     const { id } = params;
