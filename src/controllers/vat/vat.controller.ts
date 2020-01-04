@@ -2,7 +2,9 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Res } from '@nestjs/
 import { VatService } from '../../services/vat/vat.service';
 import { Response } from 'express';
 import { CreateEditVatDTO } from '../../DTO/vat/createEditVatDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('vat')
 @Controller('vat')
 export class VatController {
 
@@ -15,11 +17,12 @@ export class VatController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getVatById(@Param() params, @Res() res: Response) {
     const { id } = params;
     const value = await this.vatService.getVatByIdQueryExec(id);
-    res.send(value);
+    !value ? res.sendStatus(404) : res.send(value);
   }
 
   @Post()
@@ -28,6 +31,7 @@ export class VatController {
     res.send('Vat has been created');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteVatById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -35,6 +39,7 @@ export class VatController {
     res.send(`Vat ${id} has been deleted`);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editVatById(@Param() params, @Body() editVatDTO: CreateEditVatDTO, @Res() res: Response) {
     const { id } = params;

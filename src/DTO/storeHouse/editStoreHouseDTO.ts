@@ -1,12 +1,12 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EditStoreHouseDTO {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly name?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly area?: number;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly rentCost?: number;
 }

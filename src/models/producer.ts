@@ -22,5 +22,5 @@ export class Producer {
 
   @ManyToMany(type => Product, product => product.producers)
   products: Product[];
-//
+
 }

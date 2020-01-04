@@ -11,7 +11,6 @@ import { ApiParam, ApiTags } from '@nestjs/swagger';
 export class ClientController {
 
   constructor(private clientService: ClientService) {
-
   }
 
   @Get()
@@ -25,7 +24,7 @@ export class ClientController {
   async getClientById(@Param() params, @Res() res: Response) {
     const { id } = params;
     const value = await this.clientService.getClientByIdQueryExec(id);
-    res.json(value);
+    !value ? res.sendStatus(404) : res.json(value);
   }
 
   @Post()

@@ -24,7 +24,7 @@ export class EmployeeAddressController {
   async getEmployeeAddressById(@Param() params, @Res() res: Response) {
     const { id } = params;
     const value = await this.employeeAddressService.getEmployeeAddressByIdQueryExec(id);
-    res.json(value);
+    !value ? res.sendStatus(404) : res.json(value);
   }
 
   @Post()

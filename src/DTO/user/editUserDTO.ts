@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EditUserDTO {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly login?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly password?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly email: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly role?: 'employee' | 'client';
 }

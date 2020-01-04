@@ -1,21 +1,21 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EditAddressDTO {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly town?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly province?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly postCode?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly street?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly houseNumber?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly flatNumber?: number;
 }

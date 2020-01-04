@@ -3,7 +3,9 @@ import { StoreHouseService } from '../../services/store-house/store-house.servic
 import { Response } from 'express';
 import { CreateStoreHouseDTO } from '../../DTO/storeHouse/createStoreHouseDTO';
 import { EditStoreHouseDTO } from '../../DTO/storeHouse/editStoreHouseDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('storeHouse')
 @Controller('storeHouse')
 export class StoreHouseController {
   constructor(private storeHouseService: StoreHouseService) {
@@ -15,11 +17,12 @@ export class StoreHouseController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getStoreHouseById(@Param() params, @Res() res: Response) {
     const { id } = params;
     const value = await this.storeHouseService.getStoreHouseByIdQueryExec(id);
-    res.json(value);
+    !value ? res.sendStatus(404) : res.json(value);
   }
 
   @Post()
@@ -28,6 +31,7 @@ export class StoreHouseController {
     res.send('Storehouse has been created');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteStorehouseById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -36,11 +40,13 @@ export class StoreHouseController {
 
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
-  async editStorehouseById(@Param() params, @Body() editStoreHouseDTO: EditStoreHouseDTO) {
+  async editStorehouseById(@Param() params, @Body() editStoreHouseDTO: EditStoreHouseDTO, @Res() res: Response) {
     const { id } = params;
     await this.storeHouseService
       .editStoreHouseByIdQueryExec(id, editStoreHouseDTO);
+    res.send(`Store ${id} has been updated`);
   }
 
 }

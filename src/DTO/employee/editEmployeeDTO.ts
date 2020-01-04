@@ -4,18 +4,18 @@ export class EditEmployeeDTO {
   @ApiProperty()
   readonly name?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly surname?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly phoneNumber?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly pesel?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly position?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly salary?: number;
 }

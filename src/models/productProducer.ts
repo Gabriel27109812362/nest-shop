@@ -16,4 +16,20 @@ export class ProductProducer {
   @Column({ type: 'numeric' })
   price: number;
 
+  // setters
+  setProduct(product: Product) {
+    this.product = product;
+    return this;
+  }
+
+  setProducer(producer: Producer) {
+    this.producer = producer;
+    return this;
+  }
+
+  setPrice(price: number) {
+    this.price = price;
+    return this;
+  }
+
 }

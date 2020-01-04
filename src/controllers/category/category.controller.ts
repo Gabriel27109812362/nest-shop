@@ -2,7 +2,9 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Res } from '@nestjs/
 import { CategoryService } from '../../services/category/category.service';
 import { Response } from 'express';
 import { CreateEditCategoryDTO } from '../../DTO/category/createEditCategoryDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('category')
 @Controller('category')
 export class CategoryController {
 
@@ -15,11 +17,12 @@ export class CategoryController {
     res.json(value);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getCategoryById(@Param() params, @Res() res: Response) {
     const { id } = params;
     const value = await this.categoryService.getCategoryByIdQueryExec(id);
-    res.json(value);
+    !value ? res.sendStatus(404) : res.json(value);
   }
 
   @Post()
@@ -28,13 +31,15 @@ export class CategoryController {
     res.send('Category has been created');
   }
 
-  @Delete()
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
+  @Delete(':id')
   async deleteCategoryById(@Param() params, @Res() res: Response) {
     const { id } = params;
     await this.categoryService.deleteCategoryByIdQueryExec(id);
     res.json(`Category ${id} has been deleted`);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editCategoryById(@Param() params, @Body() editCategoryDTO: CreateEditCategoryDTO, @Res() res: Response) {
     const { id } = params;

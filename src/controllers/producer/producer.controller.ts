@@ -3,7 +3,9 @@ import { Response } from 'express';
 import { ProducerService } from '../../services/producer/producer.service';
 import { CreateProducerDTO } from '../../DTO/producer/createProducerDTO';
 import { EditProducerDTO } from '../../DTO/producer/editProducerDTO';
+import { ApiParam, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('producer')
 @Controller('producer')
 export class ProducerController {
 
@@ -17,11 +19,12 @@ export class ProducerController {
 
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Get(':id')
   async getProducerById(@Param() params, @Res() res: Response) {
     const { id } = params;
     const value = await this.producerService.getProducerByIdQueryExec(id);
-    res.json(value);
+    !value ? res.sendStatus(404) : res.json(value);
   }
 
   @Post()
@@ -30,6 +33,7 @@ export class ProducerController {
     res.send('Producer has been created');
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Delete(':id')
   async deleteProducerById(@Param() params, @Res() res: Response) {
     const { id } = params;
@@ -37,6 +41,7 @@ export class ProducerController {
     res.send(`Producer ${id} has been deleted`);
   }
 
+  @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
   @Patch(':id')
   async editProducerById(@Param() params, @Body() editProducerDTO: EditProducerDTO, @Res() res: Response) {
     const { id } = params;

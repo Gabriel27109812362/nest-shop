@@ -24,7 +24,7 @@ export class ClientAddressController {
   async getClientAddressById(@Param() params, @Res() res: Response) {
     const { id } = params;
     const value = await this.clientAddressService.getClientAddressByIdQueryExec(id);
-    res.json(value);
+    !value ? res.sendStatus(404) : res.json(value);
   }
 
   @Post()

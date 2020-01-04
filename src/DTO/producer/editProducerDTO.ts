@@ -1,10 +1,10 @@
 import { ApiProperty } from '@nestjs/swagger';
 
 export class EditProducerDTO {
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly name?: string;
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly email?: string;
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly phoneNumber?: string;
 }

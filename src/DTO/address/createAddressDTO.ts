@@ -16,6 +16,6 @@ export class CreateAddressDTO {
   @ApiProperty()
   readonly houseNumber: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   readonly flatNumber?: number;
 }

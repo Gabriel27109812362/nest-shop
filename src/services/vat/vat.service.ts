@@ -15,7 +15,7 @@ export class VatService {
 
   getVatByIdQueryExec(id: number | string) {
     return this.manager
-      .find(Vat, { idVat: Number(id) });
+      .findOne(Vat, { idVat: Number(id) });
   }
 
   createNewVatQueryExec(createVatDTO: CreateEditVatDTO) {
