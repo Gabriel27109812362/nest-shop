@@ -13,13 +13,17 @@ import { EmployeeController } from './controllers/employee/employee.controller';
 import { EmployeeAddressController } from './controllers/employeeAddress/employeeAddress.controller';
 import { EmployeeAddressService } from './services/employee-address/employee-address.service';
 import { EmployeeService } from './services/employee/employee.service';
+import { StoreHouseController } from './controllers/storeHouse/storeHouse.controller';
+import { StoreHouseService } from './services/store-house/store-house.service';
+import { ProducerController } from './controllers/producer/producer.controller';
+import { ProducerService } from './services/producer/producer.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
   ],
-  controllers: [AppController, UserController, ClientController, ClientAddressController, EmployeeController, EmployeeAddressController],
-  providers: [AppService, UserService, ClientService, ClientAddressService, EmployeeAddressService, EmployeeService],
+  controllers: [AppController, UserController, ClientController, ClientAddressController, EmployeeController, EmployeeAddressController, StoreHouseController, ProducerController],
+  providers: [AppService, UserService, ClientService, ClientAddressService, EmployeeAddressService, EmployeeService, StoreHouseService, ProducerService],
 })
 export class AppModule {
 }
