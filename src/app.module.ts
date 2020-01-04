@@ -17,13 +17,17 @@ import { StoreHouseController } from './controllers/storeHouse/storeHouse.contro
 import { StoreHouseService } from './services/store-house/store-house.service';
 import { ProducerController } from './controllers/producer/producer.controller';
 import { ProducerService } from './services/producer/producer.service';
+import { CategoryController } from './controllers/category/category.controller';
+import { CategoryService } from './services/category/category.service';
+import { VatController } from './controllers/vat/vat.controller';
+import { VatService } from './services/vat/vat.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
   ],
-  controllers: [AppController, UserController, ClientController, ClientAddressController, EmployeeController, EmployeeAddressController, StoreHouseController, ProducerController],
-  providers: [AppService, UserService, ClientService, ClientAddressService, EmployeeAddressService, EmployeeService, StoreHouseService, ProducerService],
+  controllers: [AppController, UserController, ClientController, ClientAddressController, EmployeeController, EmployeeAddressController, StoreHouseController, ProducerController, CategoryController, VatController],
+  providers: [AppService, UserService, ClientService, ClientAddressService, EmployeeAddressService, EmployeeService, StoreHouseService, ProducerService, CategoryService, VatService],
 })
 export class AppModule {
 }
