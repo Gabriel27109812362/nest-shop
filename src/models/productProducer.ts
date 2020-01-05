@@ -5,11 +5,11 @@ import { Producer } from './producer';
 @Entity('product_producer')
 export class ProductProducer {
 
-  @ManyToOne(type => Product, product => product.productProducers, { primary: true })
+  @ManyToOne(type => Product, product => product.productProducers, { primary: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'idProduct' })
   product: Product;
 
-  @ManyToOne(type => Producer, producer => producer.productProducers, { primary: true })
+  @ManyToOne(type => Producer, producer => producer.productProducers, { primary: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'idProducer' })
   producer: Producer;
 

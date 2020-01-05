@@ -96,4 +96,9 @@ export class Product {
     return this;
   }
 
+  setCategories(categories: Category[]) {
+    this.categories = categories;
+    return this;
+  }
+
 }

@@ -49,7 +49,7 @@ class ConfigService {
       ssl: this.isProd(),
     };
     // uncomment to generate ormcongig.json
-    // fs.writeFileSync('ormconfig.json', JSON.stringify(typeOrmConfig, null, 2));
+    fs.writeFileSync('ormconfig.json', JSON.stringify(typeOrmConfig, null, 2));
     return typeOrmConfig;
   }
 }
