@@ -10,7 +10,8 @@ import { AddProducersDTO } from '../../DTO/product/addProducersDTO';
 import { ProductProducer } from '../../models/productProducer';
 import { AddCategoriesDTO } from '../../DTO/product/addCategoriesDTO';
 import { EditProductDTO } from '../../DTO/product/editProductDTO';
-import { DeleteProducerDTO } from '../../DTO/product/deleteProducerDTO';
+import { DeleteProducersDTO } from '../../DTO/product/deleteProducersDTO';
+import { DeleteCategoriesDTO } from '../../DTO/product/deleteCategoriesDTO';
 
 @Injectable()
 export class ProductService {
@@ -74,18 +75,37 @@ export class ProductService {
     await this.manager.save(product);
   }
 
-  async deleteProducerQueryExec(deleteProducerDTO: DeleteProducerDTO) {
-    const { idProduct, idProducer } = deleteProducerDTO;
-
+  async deleteProducersQueryExec(deleteProducersDTO: DeleteProducersDTO) {
+    const { idProduct, idProducers } = deleteProducersDTO;
     const foundedProduct = await this.manager
       .findOne(Product, idProduct);
 
-    const foundedProducer = await this.manager
-      .findOne(Producer, idProducer);
+    const foundedProducers = await this.manager
+      .findByIds(Producer, idProducers);
+
+    const deletions = foundedProducers.map(foundedProducer => {
+      return this.manager
+        .delete(ProductProducer, { product: foundedProduct, producer: foundedProducer });
+    });
+
+    await Promise.all(deletions);
+  }
+
+  async deleteCategoriesQueryExec(deleteCategoriesDTO: DeleteCategoriesDTO) {
+    const { idProduct, idCategories } = deleteCategoriesDTO;
+
+    const product = await this.manager
+      .createQueryBuilder(Product, 'product')
+      .leftJoinAndSelect('product.categories', 'category')
+      .where('product.idProduct = :id', { id: idProduct })
+      .getOne();
+
+    product.categories = product.categories.filter(category => {
+      return !idCategories.includes(category.idCategory);
+    });
 
     await this.manager
-      .delete(ProductProducer, { product: foundedProduct, producer: foundedProducer });
-
+      .save(product);
   }
 
   deleteProductByIdQueryExec(id: number | string) {

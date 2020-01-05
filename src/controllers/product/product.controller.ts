@@ -6,7 +6,8 @@ import { ApiParam, ApiTags } from '@nestjs/swagger';
 import { AddProducersDTO } from '../../DTO/product/addProducersDTO';
 import { AddCategoriesDTO } from '../../DTO/product/addCategoriesDTO';
 import { EditProductDTO } from '../../DTO/product/editProductDTO';
-import { DeleteProducerDTO } from '../../DTO/product/deleteProducerDTO';
+import { DeleteProducersDTO } from '../../DTO/product/deleteProducersDTO';
+import { DeleteCategoriesDTO } from '../../DTO/product/deleteCategoriesDTO';
 
 @ApiTags('product')
 @Controller('product')
@@ -49,11 +50,18 @@ export class ProductController {
     res.send(`Categories ${idCategories} has been added to product ${idProduct}`);
   }
 
-  @Delete('deleteProducer')
-  async deleteProducer(@Body() deleteProducerDTO: DeleteProducerDTO, @Res() res: Response) {
-    const { idProduct, idProducer } = deleteProducerDTO;
-    await this.productService.deleteProducerQueryExec(deleteProducerDTO);
-    res.send(`product ${idProduct} producers ${idProducer} has been deleted`);
+  @Delete('deleteProducers')
+  async deleteProducer(@Body() deleteProducersDTO: DeleteProducersDTO, @Res() res: Response) {
+    const { idProduct, idProducers } = deleteProducersDTO;
+    await this.productService.deleteProducersQueryExec(deleteProducersDTO);
+    res.send(`product ${idProduct} producers ${idProducers} has been deleted`);
+  }
+
+  @Delete('deleteCategories')
+  async deleteCategory(@Body() deleteCategoriesDTO: DeleteCategoriesDTO, @Res() res: Response) {
+    const { idProduct, idCategories } = deleteCategoriesDTO;
+    await this.productService.deleteCategoriesQueryExec(deleteCategoriesDTO);
+    res.send(`Categories ${idCategories} has been removed from product ${idProduct}`);
   }
 
   @ApiParam({ name: 'id', type: 'number', required: true, allowEmptyValue: false })
