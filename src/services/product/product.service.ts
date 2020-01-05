@@ -1,4 +1,4 @@
-import { Injectable, Logger } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { getManager } from 'typeorm';
 import { Product } from '../../models/product';
 import { CreateProductDTO } from '../../DTO/product/createProductDTO';
@@ -12,6 +12,8 @@ import { AddCategoriesDTO } from '../../DTO/product/addCategoriesDTO';
 import { EditProductDTO } from '../../DTO/product/editProductDTO';
 import { DeleteProducersDTO } from '../../DTO/product/deleteProducersDTO';
 import { DeleteCategoriesDTO } from '../../DTO/product/deleteCategoriesDTO';
+import { ChangeVatDTO } from '../../DTO/product/changeVatDTO';
+import { ChangeStoreHouseDTO } from '../../DTO/product/changeStoreHouseDTO';
 
 @Injectable()
 export class ProductService {
@@ -30,12 +32,12 @@ export class ProductService {
   }
 
   async addNewProductQueryExec(createProductDTO: CreateProductDTO) {
-    const { name, magazineState, unitOfMeasure, idStore, idVat } = createProductDTO;
+    const { name, magazineState, unitOfMeasure, idStoreHouse, idVat } = createProductDTO;
 
     const vat = await this.manager
       .findOne(Vat, idVat);
     const store = await this.manager
-      .findOne(StoreHouse, idStore);
+      .findOne(StoreHouse, idStoreHouse);
 
     const product = new Product()
       .setName(name)
@@ -43,8 +45,33 @@ export class ProductService {
       .setUnitOfMeasure(unitOfMeasure)
       .setVat(vat)
       .setStoreHouse(store);
-
     await this.manager.insert(Product, product);
+  }
+
+  async changeVatQueryExec(changeVatDTO: ChangeVatDTO) {
+    const { idProduct, idVat } = changeVatDTO;
+
+    const vat = await this.manager
+      .findOne(Vat, idVat);
+
+    const product = await this.manager
+      .findOne(Product, idProduct);
+
+    product.setVat(vat);
+    await this.manager.save(product);
+  }
+
+  async changeStorehouseQueryExec(changeStoreHouseDTO: ChangeStoreHouseDTO) {
+    const { idProduct, idStoreHouse } = changeStoreHouseDTO;
+
+    const store = await this.manager
+      .findOne(StoreHouse, idStoreHouse);
+
+    const product = await this.manager
+      .findOne(Product, idProduct);
+
+    product.setStoreHouse(store);
+    await this.manager.save(product);
   }
 
   async addProducerQueryExec(addProducersDTO: AddProducersDTO) {
@@ -117,5 +144,4 @@ export class ProductService {
     return this.manager
       .update(Product, { idProduct: Number(id) }, { ...changes });
   }
-
 }

@@ -11,7 +11,7 @@ export class CreateProductDTO {
   readonly unitOfMeasure: string;
 
   @ApiProperty()
-  readonly idStore: number;
+  readonly idStoreHouse: number;
 
   @ApiProperty()
   readonly idVat: number;

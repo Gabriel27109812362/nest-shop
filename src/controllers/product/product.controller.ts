@@ -8,6 +8,8 @@ import { AddCategoriesDTO } from '../../DTO/product/addCategoriesDTO';
 import { EditProductDTO } from '../../DTO/product/editProductDTO';
 import { DeleteProducersDTO } from '../../DTO/product/deleteProducersDTO';
 import { DeleteCategoriesDTO } from '../../DTO/product/deleteCategoriesDTO';
+import { ChangeVatDTO } from '../../DTO/product/changeVatDTO';
+import { ChangeStoreHouseDTO } from '../../DTO/product/changeStoreHouseDTO';
 
 @ApiTags('product')
 @Controller('product')
@@ -34,6 +36,20 @@ export class ProductController {
   async addNewProduct(@Body() createProductDTO: CreateProductDTO, @Res() res: Response) {
     await this.productService.addNewProductQueryExec(createProductDTO);
     res.send('product has been created');
+  }
+
+  @Patch('changeVat')
+  async changeVat(@Body() changeVatDTO: ChangeVatDTO, @Res() res: Response) {
+    const { idProduct } = changeVatDTO;
+    await this.productService.changeVatQueryExec(changeVatDTO);
+    res.send(`Product ${idProduct} vat has been changed`);
+  }
+
+  @Patch('changeStoreHouse')
+  async changeStorehouse(@Body() changeStoreHouseDTO: ChangeStoreHouseDTO, @Res() res: Response) {
+    const { idProduct } = changeStoreHouseDTO;
+    await this.productService.changeStorehouseQueryExec(changeStoreHouseDTO);
+    res.send(`Product ${idProduct} storeHouse has been changed`);
   }
 
   @Patch('addProducer')
