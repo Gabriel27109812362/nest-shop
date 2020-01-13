@@ -25,13 +25,26 @@ import { ProductController } from './controllers/product/product.controller';
 import { ProductService } from './services/product/product.service';
 import { OrderController } from './controllers/order/order.controller';
 import { OrderService } from './services/order/order.service';
+import { PaymentsController } from './controllers/payments/payments.controller';
+import { PaymentsService } from './services/payments/payments.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
   ],
-  controllers: [AppController, UserController, ClientController, ClientAddressController, EmployeeController, EmployeeAddressController, StoreHouseController, ProducerController, CategoryController, VatController, ProductController, OrderController],
-  providers: [AppService, UserService, ClientService, ClientAddressService, EmployeeAddressService, EmployeeService, StoreHouseService, ProducerService, CategoryService, VatService, ProductService, OrderService],
+  controllers: [
+    AppController, UserController, ClientController,
+    ClientAddressController, EmployeeController,
+    EmployeeAddressController, StoreHouseController,
+    ProducerController, CategoryController, VatController,
+    ProductController, OrderController, PaymentsController,
+  ],
+  providers: [
+    AppService, UserService, ClientService,
+    ClientAddressService, EmployeeAddressService, EmployeeService,
+    StoreHouseService, ProducerService, CategoryService,
+    VatService, ProductService, OrderService, PaymentsService,
+  ],
 })
 export class AppModule {
 }

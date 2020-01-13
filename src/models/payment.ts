@@ -1,7 +1,8 @@
-import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Check, Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Order } from './order';
 
 @Entity('payment')
+@Check(`"paymentMethod" = 'cash' OR "paymentMethod" = 'card' OR "paymentMethod" = 'transfer'`)
 export class Payment {
 
   @PrimaryGeneratedColumn('increment')
@@ -17,10 +18,7 @@ export class Payment {
   paymentMethod: string;
 
   @Column({ type: 'date' })
-  paymentStartDate: Date;
-
-  @Column({ type: 'date' })
-  paymentEndDate: Date;
+  paymentDate: Date;
 
   @Column({ type: 'varchar' })
   description: string;
@@ -28,4 +26,35 @@ export class Payment {
   @ManyToOne(type => Order, order => order.payments, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'idOrder' })
   order: Order;
+
+  setAmount(amount: number) {
+    this.amount = amount;
+    return this;
+  }
+
+  setPaymentStatus(paymentStatus: string) {
+    this.paymentStatus = paymentStatus;
+    return this;
+  }
+
+  setPaymentMethod(paymentMethod: 'card' | 'cash' | 'transfer') {
+    this.paymentMethod = paymentMethod;
+    return this;
+  }
+
+  setPaymentDate(date: Date) {
+    this.paymentDate = date;
+    return this;
+  }
+
+  setDescription(description: string) {
+    this.description = description;
+    return this;
+  }
+
+  setOrder(order: Order) {
+    this.order = order;
+    return this;
+  }
+
 }
