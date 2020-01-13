@@ -1,4 +1,4 @@
-import { Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Check, Column, Entity, JoinColumn, JoinTable, ManyToMany, ManyToOne, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { OrderDetails } from './orderDetails';
 import { Order } from './order';
 import { Vat } from './vat';
@@ -8,6 +8,7 @@ import { Producer } from './producer';
 import { ProductProducer } from './productProducer';
 
 @Entity('product')
+@Check(`"magazineState" >= 0`)
 export class Product {
 
   @PrimaryGeneratedColumn('increment')
@@ -102,3 +103,5 @@ export class Product {
   }
 
 }
+
+

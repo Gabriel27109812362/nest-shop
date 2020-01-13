@@ -23,13 +23,15 @@ import { VatController } from './controllers/vat/vat.controller';
 import { VatService } from './services/vat/vat.service';
 import { ProductController } from './controllers/product/product.controller';
 import { ProductService } from './services/product/product.service';
+import { OrderController } from './controllers/order/order.controller';
+import { OrderService } from './services/order/order.service';
 
 @Module({
   imports: [
     TypeOrmModule.forRoot(configService.getTypeOrmConfig()),
   ],
-  controllers: [AppController, UserController, ClientController, ClientAddressController, EmployeeController, EmployeeAddressController, StoreHouseController, ProducerController, CategoryController, VatController, ProductController],
-  providers: [AppService, UserService, ClientService, ClientAddressService, EmployeeAddressService, EmployeeService, StoreHouseService, ProducerService, CategoryService, VatService, ProductService],
+  controllers: [AppController, UserController, ClientController, ClientAddressController, EmployeeController, EmployeeAddressController, StoreHouseController, ProducerController, CategoryController, VatController, ProductController, OrderController],
+  providers: [AppService, UserService, ClientService, ClientAddressService, EmployeeAddressService, EmployeeService, StoreHouseService, ProducerService, CategoryService, VatService, ProductService, OrderService],
 })
 export class AppModule {
 }

@@ -13,9 +13,6 @@ export class Order {
   @Column({ type: 'date' })
   dateOrder: Date;
 
-  @Column({ type: 'date' })
-  executionDeadline: Date;
-
   @Column({ type: 'varchar' })
   orderStatus: string;
 
@@ -49,5 +46,20 @@ export class Order {
     },
   })
   products: Product[];
+
 //
+  setDateOrder(date: Date) {
+    this.dateOrder = date;
+    return this;
+  }
+
+  setUser(user: User) {
+    this.user = user;
+    return this;
+  }
+
+  setOrderStatus(status: string) {
+    this.orderStatus = status;
+    return this;
+  }
 }
